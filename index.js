@@ -32,8 +32,8 @@ async function updateLeetCodeGist(leetcode) {
     const lines = []
 
     const title = [
-        "Difficulty".padEnd(10),
-        "Solved".padEnd(9),
+        "Difficulty".padEnd(14),
+        "Solved".padEnd(10),
         "Accepted Rate".padEnd(8)
     ]
     lines.push(title.join(" "))
@@ -44,9 +44,9 @@ async function updateLeetCodeGist(leetcode) {
         const solvedRadio = leetcode.solved[i].solvedRadio
 
         const line = [
-            difficulty.padEnd(10),
-            solvedRadio.padEnd(9),
-            generateBarChart(acceptedRate, 20),
+            difficulty.padEnd(14),
+            solvedRadio.padEnd(10),
+            generateBarChart(acceptedRate, 25),
             String(acceptedRate.toFixed(1)).padStart(5) + "%"
         ]
         lines.push(line.join(" "))
@@ -59,7 +59,7 @@ async function updateLeetCodeGist(leetcode) {
             gist_id: gist_id,
             files: {
                 [filename]: {
-                    filename: `💻 My LeetCode Stats ✨`,
+                    filename: `💻 My LeetCode Stats...`,
                     content: lines.join("\n")
                 }
             }
@@ -71,18 +71,14 @@ async function updateLeetCodeGist(leetcode) {
 }
 
 function generateBarChart(percent, size) {
-    const syms = "░▏▎▍▌▋▊▉█";
+    const clamped = Math.max(0, Math.min(percent, 100));
+    const filled = Math.round((clamped / 100) * size);
+    const empty = size - filled;
 
-    const frac = Math.floor((size * 8 * percent) / 100);
-    const barsFull = Math.floor(frac / 8);
-    if (barsFull >= size) {
-        return syms.substring(8, 9).repeat(size);
-    }
-    const semi = frac % 8;
-
-    return [syms.substring(8, 9).repeat(barsFull), syms.substring(semi, semi + 1)]
-        .join("")
-        .padEnd(size, syms.substring(0, 1));
+    return (
+        "█".repeat(filled) +
+        "░".repeat(empty)
+    );
 }
 
 (async() => {
