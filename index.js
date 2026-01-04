@@ -34,7 +34,7 @@ async function updateLeetCodeGist(leetcode) {
     const title = [
         "Difficulty".padEnd(14),
         "Solved".padEnd(12),
-        "Accepted Rate".padEnd(12)
+        "Accepted Rate".padEnd(10)
     ]
     lines.push(title.join(" "))
 
@@ -46,7 +46,7 @@ async function updateLeetCodeGist(leetcode) {
         const line = [
             difficulty.padEnd(14),
             solvedRadio.padEnd(12),
-            generateBarChart(acceptedRate, 30),
+            generateBarChart(acceptedRate, 25),
             String(acceptedRate.toFixed(1)).padStart(5) + "%"
         ]
         lines.push(line.join(" "))
