@@ -1,7 +1,8 @@
 name: Update LeetCode gist
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *'    # Runs every day at midnight
+  workflow_dispatch:       # Allows manual run from GitHub UI
   push:
     branches: main
     
